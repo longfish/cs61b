@@ -28,12 +28,44 @@ public class NBody {
         double universeRadius = NBody.readRadius(filename);
         Planet[] planetGroup = NBody.readPlanets(filename);
 
+        StdDraw.enableDoubleBuffering();
         StdDraw.setScale(-universeRadius, universeRadius);
         StdDraw.clear(); // clear the drawing window
-        StdDraw.picture(0, 0, universeBackground); // draw the image at the origin
 
+        // simulate the planet motion
+        double t = 0;
+        while (t < T) {
+            double[] xForces = new double[planetGroup.length];
+            double[] yForces = new double[planetGroup.length];
+
+            for (int i = 0; i < planetGroup.length; i++) {
+                xForces[i] = planetGroup[i].calcNetForceExertedByX(planetGroup);
+                yForces[i] = planetGroup[i].calcNetForceExertedByY(planetGroup);
+            }
+
+            for (int i = 0; i < planetGroup.length; i++)
+                planetGroup[i].update(dt, xForces[i], yForces[i]);
+
+            // draw the background image
+            StdDraw.clear();
+            StdDraw.picture(0, 0, universeBackground);
+
+            // draw all the planets
+            for (Planet p : planetGroup)
+                p.draw();
+            StdDraw.show();
+            StdDraw.pause(10);
+
+            t += dt;
+        }
+
+        // print out the simulation results
+        StdOut.printf("%d\n", planetGroup.length);
+        StdOut.printf("%.2e\n", universeRadius);
         for (Planet p : planetGroup) {
-            p.draw();
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+                    p.xxPos, p.yyPos, p.xxVel,
+                    p.yyVel, p.mass, p.imgFileName);
         }
     }
 }
