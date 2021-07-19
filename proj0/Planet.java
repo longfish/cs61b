@@ -1,5 +1,5 @@
 public class Planet {
-    public final static double G = 6.67e-11;
+    private final static double G = 6.67e-11;
     public double xxPos, yyPos;
     public double xxVel, yyVel;
     public double mass;
@@ -72,6 +72,6 @@ public class Planet {
     }
 
     public void draw() {
-        StdDraw.picture(xxPos, yyPos, imgFileName);
+        StdDraw.picture(xxPos, yyPos, "./images/" + imgFileName);
     }
 }

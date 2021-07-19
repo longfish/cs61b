@@ -11,7 +11,7 @@ public class NBody {
         Planet[] arrPlanet = new Planet[nPlanet];
         in.readDouble();
         for (int i = 0; i < nPlanet; i++) {
-            Planet iPlanet = new Planet(in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble(), "./images/" + in.readString());
+            Planet iPlanet = new Planet(in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble(), in.readString());
             arrPlanet[i] = iPlanet;
         }
 
