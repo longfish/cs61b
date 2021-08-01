@@ -6,18 +6,18 @@
  *  Implementation: use the array
  **************************************************************************** */
 
-import java.util.NoSuchElementException;
-
 public class ArrayDeque<Item> {
 
-    private static final int INIT_CAPACITY = 8;    // initial capacity of underlying resizing array
+    private static final int INIT_CAPACITY = 8;
+    // initial capacity of underlying resizing array
+
     private Item[] deque; // holds the items
     private int n; // number of items on queue
     private int first; // index of first element of deque
     private int last; // index of next available slot
 
     /**
-     * construct an empty deque
+     * Construct an empty deque.
      */
     public ArrayDeque() {
         deque = (Item[]) new Object[INIT_CAPACITY];
@@ -44,10 +44,14 @@ public class ArrayDeque<Item> {
      * Adds an item of type Item to the front of the deque.
      */
     public void addFirst(Item item) {
-        if (n == deque.length) expand(2 * deque.length);
+        if (n == deque.length) {
+            expand(2 * deque.length);
+        }
 
         deque[first--] = item;
-        if (first == -1) first = deque.length - 1; // wrap-around
+        if (first == -1) {
+            first = deque.length - 1; // wrap-around
+        }
         ++n;
     }
 
@@ -55,10 +59,14 @@ public class ArrayDeque<Item> {
      * Adds an item of type Item to the back of the deque.
      */
     public void addLast(Item item) {
-        if (n == deque.length) expand(2 * deque.length);
+        if (n == deque.length) {
+            expand(2 * deque.length);
+        }
 
         deque[last++] = item;
-        if (last == deque.length) last = 0;//wrap-around
+        if (last == deque.length) {
+            last = 0; //wrap-around
+        }
         ++n;
     }
 
@@ -67,14 +75,20 @@ public class ArrayDeque<Item> {
      * exists, returns null.
      */
     public Item removeFirst() {
-        if (isEmpty()) throw new NoSuchElementException("Deque underflow");
+        if (isEmpty()) {
+            return null;
+        }
         first++;
-        if (first == deque.length)
+        if (first == deque.length) {
             first = 0;
+        }
+
         Item item = deque[first];
         deque[first] = null; // avoid loitering
         n--;
-        if (n > 0 && n == deque.length / 4) shrink(deque.length / 2);
+        if (n > 0 && n == deque.length / 4) {
+            shrink(deque.length / 2);
+        }
         return item;
     }
 
@@ -83,14 +97,20 @@ public class ArrayDeque<Item> {
      * exists, returns null.
      */
     public Item removeLast() {
-        if (isEmpty()) throw new NoSuchElementException("Deque underflow");
+        if (isEmpty()) {
+            return null;
+        }
+
         last--;
-        if (last == -1)
+        if (last == -1) {
             last = deque.length - 1;
+        }
         Item item = deque[last];
         deque[last] = null; // avoid loitering
         n--;
-        if (n > 0 && n == deque.length / 4) shrink(deque.length / 2);
+        if (n > 0 && n == deque.length / 4) {
+            shrink(deque.length / 2);
+        }
         return item;
     }
 
@@ -100,8 +120,9 @@ public class ArrayDeque<Item> {
      * the deque!
      */
     public Item get(int index) {
-        if (index < 0 || index >= n)
+        if (index < 0 || index >= n) {
             return null;
+        }
         return deque[(first + index + 1) % deque.length];
     }
 
@@ -118,8 +139,9 @@ public class ArrayDeque<Item> {
     public void expand(int capacity) {
         assert capacity >= n;
         Item[] copy = (Item[]) new Object[capacity];
-        for (int i = 1; i < n + 1; i++)
+        for (int i = 1; i < n + 1; i++) {
             copy[i] = deque[(first + i) % deque.length];
+        }
         deque = copy;
         first = 0;
         last = n + 1;
@@ -128,8 +150,9 @@ public class ArrayDeque<Item> {
     public void shrink(int capacity) {
         assert capacity >= n;
         Item[] copy = (Item[]) new Object[capacity];
-        for (int i = 1; i < n + 1; i++)
+        for (int i = 1; i < n + 1; i++) {
             copy[i] = deque[(first + i) % deque.length];
+        }
         deque = copy;
         first = 0;
         last = n + 1;

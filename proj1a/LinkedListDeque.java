@@ -6,10 +6,8 @@
  *  Implementation: use the linked list
  **************************************************************************** */
 
-import java.util.NoSuchElementException;
-
 public class LinkedListDeque<Item> {
-    final private Node<Item> sentinel;
+    private final Node<Item> sentinel;
     private int n;
 
     /**
@@ -46,7 +44,9 @@ public class LinkedListDeque<Item> {
      * Adds an item of type Item to the front of the deque.
      */
     public void addFirst(Item item) {
-        if (item == null) throw new IllegalArgumentException();
+        if (item == null) {
+            throw new IllegalArgumentException();
+        }
         Node<Item> oldFirst = sentinel.next;
         Node<Item> first = new Node<Item>();
         first.item = item;
@@ -63,7 +63,9 @@ public class LinkedListDeque<Item> {
      * Adds an item of type Item to the back of the deque.
      */
     public void addLast(Item item) {
-        if (item == null) throw new IllegalArgumentException();
+        if (item == null) {
+            throw new IllegalArgumentException();
+        }
         Node<Item> oldLast = sentinel.prior;
         Node<Item> last = new Node<Item>();
         last.item = item;
@@ -81,8 +83,9 @@ public class LinkedListDeque<Item> {
      * exists, returns null.
      */
     public Item removeFirst() {
-        if (isEmpty()) throw new NoSuchElementException();
-
+        if (isEmpty()) {
+            return null;
+        }
         // find the item of 1st node
         Item temp = sentinel.next.item;
 
@@ -101,7 +104,10 @@ public class LinkedListDeque<Item> {
      * exists, returns null.
      */
     public Item removeLast() {
-        if (isEmpty()) throw new NoSuchElementException();
+        if (isEmpty()) {
+            return null;
+        }
+
         // find the item of last node
         Item temp = sentinel.prior.item;
 
@@ -133,12 +139,13 @@ public class LinkedListDeque<Item> {
      * the deque!
      */
     public Item get(int index) {
-        if (index >= n || index < 0)
+        if (index >= n || index < 0) {
             return null;
-
+        }
         Node<Item> tempNode = sentinel.next;
-        for (int i = 0; i < index; i++)
+        for (int i = 0; i < index; i++) {
             tempNode = tempNode.next;
+        }
 
         return tempNode.item;
     }
@@ -154,11 +161,13 @@ public class LinkedListDeque<Item> {
      * Helper method to recursively get the item
      */
     private Item getRecursive(int index, Node<Item> node) {
-        if (index >= n || index < 0)
+        if (index >= n || index < 0) {
             return null;
+        }
 
-        if (index == 0)
+        if (index == 0) {
             return node.item;
+        }
         return getRecursive(index - 1, node.next);
     }
 
