@@ -121,7 +121,7 @@ public class LinkedListDeque<Item> {
     public void printDeque() {
         Node<Item> tempNode = sentinel.next;
         for (int i = 0; i < n; i++) {
-            System.out.print(tempNode.item + ",");
+            System.out.print(tempNode.item + " ");
             tempNode = tempNode.next;
         }
         System.out.println();
