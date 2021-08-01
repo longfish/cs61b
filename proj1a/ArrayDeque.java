@@ -44,11 +44,16 @@ public class ArrayDeque<Item> {
      * Adds an item of type Item to the front of the deque.
      */
     public void addFirst(Item item) {
+        if (item == null) {
+            return;
+        }
+
         if (n == deque.length) {
             expand(2 * deque.length);
         }
 
-        deque[first--] = item;
+        deque[first] = item;
+        first -= 1;
         if (first == -1) {
             first = deque.length - 1; // wrap-around
         }
@@ -59,11 +64,16 @@ public class ArrayDeque<Item> {
      * Adds an item of type Item to the back of the deque.
      */
     public void addLast(Item item) {
+        if (item == null) {
+            return;
+        }
+
         if (n == deque.length) {
             expand(2 * deque.length);
         }
 
-        deque[last++] = item;
+        deque[last] = item;
+        last += 1;
         if (last == deque.length) {
             last = 0; //wrap-around
         }
@@ -78,6 +88,7 @@ public class ArrayDeque<Item> {
         if (isEmpty()) {
             return null;
         }
+
         first++;
         if (first == deque.length) {
             first = 0;
@@ -86,7 +97,7 @@ public class ArrayDeque<Item> {
         Item item = deque[first];
         deque[first] = null; // avoid loitering
         n--;
-        if (n > 0 && n == deque.length / 4) {
+        if (n > 3 && n == deque.length / 4) {
             shrink(deque.length / 2);
         }
         return item;
@@ -108,7 +119,7 @@ public class ArrayDeque<Item> {
         Item item = deque[last];
         deque[last] = null; // avoid loitering
         n--;
-        if (n > 0 && n == deque.length / 4) {
+        if (n > 3 && n == deque.length / 4) {
             shrink(deque.length / 2);
         }
         return item;
@@ -139,23 +150,23 @@ public class ArrayDeque<Item> {
     public void expand(int capacity) {
         assert capacity >= n;
         Item[] copy = (Item[]) new Object[capacity];
-        for (int i = 1; i < n + 1; i++) {
-            copy[i] = deque[(first + i) % deque.length];
+        for (int i = 0; i < n; i++) {
+            copy[i] = deque[(first + i + 1) % deque.length];
         }
         deque = copy;
-        first = 0;
-        last = n + 1;
+        first = deque.length - 1;
+        last = n;
     }
 
     public void shrink(int capacity) {
         assert capacity >= n;
         Item[] copy = (Item[]) new Object[capacity];
-        for (int i = 1; i < n + 1; i++) {
-            copy[i] = deque[(first + i) % deque.length];
+        for (int i = 0; i < n; i++) {
+            copy[i] = deque[(first + i + 1) % deque.length];
         }
         deque = copy;
-        first = 0;
-        last = n + 1;
+        first = deque.length - 1;
+        last = n;
     }
 
     public static void main(String[] args) {
