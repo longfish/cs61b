@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class TestPalindrome {
     // You must use this palindrome, and not instantiate
@@ -16,4 +16,19 @@ public class TestPalindrome {
         }
         assertEquals("persiflage", actual);
     } // Uncomment this class once you've created your Palindrome class. */
+
+    @Test
+    public void testIsPalindrome1() {
+        assertTrue(palindrome.isPalindrome("A"));
+        assertTrue(palindrome.isPalindrome("abcba"));
+        assertTrue(palindrome.isPalindrome(""));
+        assertTrue(palindrome.isPalindrome("noon-noon"));
+    }
+
+    @Test
+    public void testIsPalindrome2() {
+        assertFalse(palindrome.isPalindrome("Abc"));
+        assertFalse(palindrome.isPalindrome("good"));
+        assertFalse(palindrome.isPalindrome("Ada"));
+    }
 }
